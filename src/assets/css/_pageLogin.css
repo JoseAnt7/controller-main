@@ -1,0 +1,8 @@
+.background {
+
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+}
