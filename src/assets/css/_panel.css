@@ -48,8 +48,8 @@
 }
 
 .opciones {
-    max-height: 50vh;
-    min-height: 50vh;
+    max-height: 30vh;
+    min-height: 30vh;
     padding: 4px 0;
     background: #18202b;
     display: flex;
@@ -75,12 +75,11 @@
     transition: all 0.5s ease-in-out;
 }
 
-/* Media query para pantallas más pequeñas */
 @media (max-width: 600px) {
     .opciones a {
-        min-width: 40vw; /* Ajusta el ancho mínimo */
-        min-height: 20vh; /* Ajusta la altura mínima */
-        margin: 2px; /* Reduce el margen */
+        min-width: 40vw;
+        min-height: 20vh;
+        margin: 2px;
     }
 }
 
