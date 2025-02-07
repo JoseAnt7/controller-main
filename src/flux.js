@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const getState = ({ getStore, getActions, setStore }) => {
-    const API_URL = 'http://localhost:5000/auth';
+    const API_URL = process.env.BACKEND_URL;
 
     return {
         store: {
