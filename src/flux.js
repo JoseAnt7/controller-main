@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const getState = ({ getStore, getActions, setStore }) => {
-    const API_URL = process.env.BACKEND_URL;
+    const API_URL = import.meta.env.VITE_BACKEND_URL;;
 
     return {
         store: {
