@@ -54,6 +54,18 @@ export const Sidebar = () => {
                     )}
                 </div>
                 <div className="menu-item">
+                    <div className="menu-option" onClick={() => toggleMenu('wp')}>
+                        <i className="bi bi-wordpress"></i>
+                        <span>Wordpress</span>
+                    </div>
+                    {openMenu === 'wp' && (
+                        <div className="submenu">
+                            <p>Añadir Wordpress</p>
+                            <p>Gestionar Wordpress</p>
+                        </div>
+                    )}
+                </div>
+                <div className="menu-item">
                     <div className="menu-option" onClick={() => toggleMenu('configuracion')}>
                         <i className="bi bi-gear"></i>
                         <span>Configuración</span>

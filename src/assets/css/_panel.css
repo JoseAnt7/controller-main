@@ -49,7 +49,7 @@
 
 .opciones {
     max-height: 30vh;
-    min-height: 30vh;
+    min-height: 20vh;
     padding: 4px 0;
     background: #18202b;
     display: flex;

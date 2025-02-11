@@ -1,7 +1,7 @@
 import React from "react";
 import img_profile from "../../assets/img/profile/5087579.png"
 
-export const Navbar = () => {
+export const Navbar = ({username}) => {
 
 
     return (
@@ -18,7 +18,7 @@ export const Navbar = () => {
                     </a>
                     <div className="d-flex align-items-center p-0 gap-2">
                         <span>
-                            Usuario
+                            {username}
                         </span>
                         <span>
                             <img src={img_profile} width={"60px"} height={"60px"} />
