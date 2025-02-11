@@ -2,7 +2,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from models import db
-from routes import auth_bp
+from routes import auth_bp, user_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -14,6 +14,7 @@ jwt = JWTManager(app)
 CORS(app)  # Habilita CORS para todas las rutas
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(user_bp, url_prefix='/api')
 
 @app.route('/')
 def home():

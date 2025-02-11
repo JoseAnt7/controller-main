@@ -36,7 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                   }
               
                   const data = await response.json();
-                  setStore({ data, success: "Inicio de sesión exitoso", error: null });
+                  setStore({ data, user: data.username ,success: "Inicio de sesión exitoso", error: null });
                   console.log("Inicio de sesió exitoso")
                 } catch (error) {
                   setStore({ error: error.message });
