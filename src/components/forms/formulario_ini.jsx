@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ico_profile from "../../assets/img/profile/5087579.png";
 import "../../assets/css/_form.css";
 import { useFlux } from "../../flux";
@@ -23,12 +23,15 @@ export const Forms = () => {
         const formData = { username: usernameForm, email: usernameForm, password: passwd };
         await actions.iniciar_sesion(formData);
     
-        setTimeout(() => {
-            if (store.success) {
-                navigate("/panel-control");
-            }
-        }, 2000);
     };
+
+    useEffect(() => {
+        if (store.success) {
+            setTimeout(() => {
+                navigate("/panel-control");
+            }, 2000);
+        }
+    }, [store.success, navigate]);
 
     return (
         <>
