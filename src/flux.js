@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             success: null
         },
         actions: {
+            
             fetchData: async () => {
                 try {
                     const response = await fetch('https://api.example.com/data');
@@ -22,26 +23,30 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             iniciar_sesion: async (formData) => {
                 try {
-                  const { username, email, password } = formData;
-                  const response = await fetch(`${API_URL}/login`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ username, email, password }),
-                  });
-              
-                  if (!response.ok) {
-                    throw new Error('Error en el inicio de sesión');
-                  }
-              
-                  const data = await response.json();
-                  setStore({ data, user: data.username ,success: "Inicio de sesión exitoso", error: null });
-                  console.log("Inicio de sesió exitoso")
+                    const { username, email, password } = formData;
+                    const response = await fetch(`${API_URL}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, email, password }),
+                    });
+            
+                    if (!response.ok) {
+                        throw new Error('Error en el inicio de sesión');
+                    }
+            
+                    const data = await response.json();
+                    setStore({ data, user: data.username, success: "Inicio de sesión exitoso", error: null });
+            
+                    // Guardar en localStorage
+                    localStorage.setItem("user", JSON.stringify({ username: data.username, token: data.token }));
+                    
+                    console.log("Inicio de sesión exitoso");
                 } catch (error) {
-                  setStore({ error: error.message });
+                    setStore({ error: error.message });
                 }
-              },
+            },
             registro: async (formData) => {
                 try {
                     const { username, email, password } = formData;
