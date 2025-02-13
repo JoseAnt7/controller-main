@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const getState = ({ getStore, getActions, setStore }) => {
-    const API_URL = import.meta.env.VITE_BACKEND_URL;;
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
 
     return {
         store: {
@@ -11,7 +11,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             success: null
         },
         actions: {
-            
             fetchData: async () => {
                 try {
                     const response = await fetch('https://api.example.com/data');
@@ -31,17 +30,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify({ username, email, password }),
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Error en el inicio de sesión');
                     }
-            
+
                     const data = await response.json();
-                    setStore({ data, user: data.username, success: "Inicio de sesión exitoso", error: null });
-            
+                    const user = { username: data.username, token: data.token };
+                    console.log('comprobación 1: '+ user.username + "/ " + user.token)
+                    setStore({ data, user, success: "Inicio de sesión exitoso", error: null });
+
                     // Guardar en localStorage
-                    localStorage.setItem("user", JSON.stringify({ username: data.username, token: data.token }));
-                    
+                    localStorage.setItem("user", JSON.stringify(user));
+
                     console.log("Inicio de sesión exitoso");
                 } catch (error) {
                     setStore({ error: error.message });
@@ -63,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const data = await response.json();
-                    setStore({ data, success: "Inicio de sesión exitoso", error: null });
+                    setStore({ data, success: "Registro exitoso", error: null });
                 } catch (error) {
                     setStore({ error: error.message });
                 }

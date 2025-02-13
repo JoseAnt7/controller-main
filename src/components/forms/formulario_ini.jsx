@@ -16,20 +16,19 @@ export const Forms = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = { username: usernameForm, email: usernameForm, password: passwd };
-        await actions.iniciar_sesion(formData); // Espera la acción
-
-        // No redirige inmediatamente, sino que espera a que `store.success` cambie en useEffect
+        await actions.iniciar_sesion(formData);
     };
 
     useEffect(() => {
         if (store.success) {
+            console.log("Usuario: " + store.user.token );
             const timer = setTimeout(() => {
                 navigate("/panel-control");
             }, 2000);
 
-            return () => clearTimeout(timer); // Limpia el timeout si el componente se desmonta
+            return () => clearTimeout(timer);
         }
-    }, [store.success, navigate]); 
+    }, [store.success, store.user, navigate]); 
 
     return (
         <>
