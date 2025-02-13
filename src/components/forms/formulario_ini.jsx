@@ -5,33 +5,30 @@ import { useFlux } from "../../flux";
 import { Form_Registro } from "./formulario_reg.jsx";
 import { useNavigate } from "react-router-dom";
 
-
 export const Forms = () => {
-    const [registro, setRegistro] = useState(false);
+    const [registro, setRegistro] = useState(false); 
     const navigate = useNavigate();
-
-    const changeOption = () => {
-        setRegistro(!registro);
-    };
-
     const { store, actions } = useFlux();
-    const [usernameForm, SetUsername] = useState("")
-    const [passwd, SetPasswd] = useState("")
+
+    const [usernameForm, setUsername] = useState("");
+    const [passwd, setPasswd] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = { username: usernameForm, email: usernameForm, password: passwd };
         await actions.iniciar_sesion(formData);
-    
     };
 
     useEffect(() => {
         if (store.success) {
-            setTimeout(() => {
+            console.log("Usuario: " + store.user.token );
+            const timer = setTimeout(() => {
                 navigate("/panel-control");
             }, 2000);
+
+            return () => clearTimeout(timer);
         }
-    }, [store.success, navigate]);
+    }, [store.success, store.user, navigate]); 
 
     return (
         <>
@@ -42,8 +39,20 @@ export const Forms = () => {
                         <h3>Bienvenido</h3>
                     </div>
                     <form className="d-flex flex-column gap-3" onSubmit={handleSubmit}>
-                        <input className="form-control" type="text" placeholder="Usuario y/o email" value={usernameForm} onChange={(e) => SetUsername(e.target.value)} />
-                        <input className="form-control" type="password" placeholder="Contraseña" value={passwd} onChange={(e) => SetPasswd(e.target.value)} />
+                        <input 
+                            className="form-control" 
+                            type="text" 
+                            placeholder="Usuario y/o email" 
+                            value={usernameForm} 
+                            onChange={(e) => setUsername(e.target.value)} 
+                        />
+                        <input 
+                            className="form-control" 
+                            type="password" 
+                            placeholder="Contraseña" 
+                            value={passwd} 
+                            onChange={(e) => setPasswd(e.target.value)} 
+                        />
                         <button className="btn btn-primary w-100">Login</button>
                     </form>
                     <div className="d-flex justify-content-between align-items-center flex-wrap">
@@ -54,7 +63,7 @@ export const Forms = () => {
                         <a href="#">¿Has olvidado tu contraseña?</a>
                     </div>
                     <div className="d-flex justify-content-center">
-                        <a href="#" onClick={changeOption}>Crear una cuenta</a>
+                        <a href="#" onClick={() => setRegistro(true)}>Crear una cuenta</a>
                     </div>
 
                     {store.success && (
@@ -63,10 +72,7 @@ export const Forms = () => {
                 </div>
             )}
 
-            {registro && (
-                <Form_Registro registro={() => setRegistro(false)} />
-            )}
-
+            {registro && <Form_Registro registro={() => setRegistro(false)} />}
         </>
     );
 };

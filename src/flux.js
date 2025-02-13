@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const getState = ({ getStore, getActions, setStore }) => {
-    const API_URL = import.meta.env.VITE_BACKEND_URL;;
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
 
     return {
         store: {
@@ -22,26 +22,32 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             iniciar_sesion: async (formData) => {
                 try {
-                  const { username, email, password } = formData;
-                  const response = await fetch(`${API_URL}/login`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ username, email, password }),
-                  });
-              
-                  if (!response.ok) {
-                    throw new Error('Error en el inicio de sesión');
-                  }
-              
-                  const data = await response.json();
-                  setStore({ data, user: data.username ,success: "Inicio de sesión exitoso", error: null });
-                  console.log("Inicio de sesió exitoso")
+                    const { username, email, password } = formData;
+                    const response = await fetch(`${API_URL}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, email, password }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error en el inicio de sesión');
+                    }
+
+                    const data = await response.json();
+                    const user = { username: data.username, token: data.token };
+                    console.log('comprobación 1: '+ user.username + "/ " + user.token)
+                    setStore({ data, user, success: "Inicio de sesión exitoso", error: null });
+
+                    // Guardar en localStorage
+                    localStorage.setItem("user", JSON.stringify(user));
+
+                    console.log("Inicio de sesión exitoso");
                 } catch (error) {
-                  setStore({ error: error.message });
+                    setStore({ error: error.message });
                 }
-              },
+            },
             registro: async (formData) => {
                 try {
                     const { username, email, password } = formData;
@@ -58,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const data = await response.json();
-                    setStore({ data, success: "Inicio de sesión exitoso", error: null });
+                    setStore({ data, success: "Registro exitoso", error: null });
                 } catch (error) {
                     setStore({ error: error.message });
                 }
